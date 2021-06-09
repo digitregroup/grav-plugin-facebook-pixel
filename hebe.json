@@ -1,0 +1,15 @@
+{
+   "project":"fb-pxl",
+   "platforms":{
+      "grav":{
+         "nodes":{
+            "plugin":[
+               {
+                  "source":"/",
+                  "destination":"/user/plugins/fb-pxl"
+               }
+            ]
+         }
+      }
+   }
+}

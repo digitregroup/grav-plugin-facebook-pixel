@@ -1,0 +1,77 @@
+name: FB Pixel
+version: 0.0.1
+description: "This plugin provides a convenient way to add FB Pixel tracking from server side."
+icon: list-alt
+author:
+  name: Team DigitRE Group
+  email: devs@digitregroup.com
+  url: https://digitregroup.com
+homepage:
+keywords: facebook, fb, pixel, pxl, tracking
+
+form:
+  validation: strict
+  fields:
+    tabs:
+      type: tabs
+      active: 1
+      class: subtle
+      fields:
+        general:
+          type: tab
+          title: General
+          fields:
+            enabled:
+              type: toggle
+              label: Plugin status
+              highlight: 1
+              default: 0
+              options:
+                1: Enabled
+                0: Disabled
+              validate:
+                type: bool
+            Credentials:
+              type: section
+              title: API credentials
+              underline: true
+            pixelid:
+              type: text
+              label: Pixel ID
+              placeholder: 231398390754453
+            accesstoken:
+              type: text
+              label: Access Token
+              placeholder: EAAx1XwT1yCEBALDGADoyZCIXoJQU72Rl3Kssmj25SwV3pOTha8hFQLl0ddiFjzBUMP4LJrhcy5q8sMYHPIP4KyXBFnqTleNPkfZCcO2OPd9ohPfIOv1rfddU9ZCrR5D4lxjsYHzT0RPm7wDFhJZATUzsTEE4N1fFNeQ5uFHhD7AMrBWyQW2ZCHTtM4bhpn7YZD
+        test:
+          type: tab
+          title: Test mode
+          fields:
+            Testmode:
+              type: section
+              title: Test mode
+              underline: true
+            testmode:
+              type: toggle
+              label: Enable or disable the test mode (enabled by default)
+              highlight: 1
+              default: 1
+              options:
+                1: Enabled
+                0: Disabled
+              validate:
+                type: bool
+            testevent:
+              type: text
+              label: Test event name
+              placeholder: Test-event-123
+              default: Test-event-123
+        events:
+          type: tab
+          title: Events rules
+          fields:
+            rules:
+              type: array
+              label: Rules depending on the URL
+              placeholder_key: /an/url or Regular expression
+              placeholder_value: EventName
