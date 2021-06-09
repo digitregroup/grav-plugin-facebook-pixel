@@ -19,9 +19,9 @@ Different events can be triggered depending on some rules. Into the "Events rule
 
 You can specify plain urls or simple regular expressions to be matched :
 
-- ^ = like in PCRE, means "the beginning of the string"
-- $ = like in PCRE, means "the end of the string"
-- * = the universal matching (like .* in PCRE)
+- `^` = like in PCRE, means "the beginning of the string"
+- `$` = like in PCRE, means "the end of the string"
+- `*` = the universal matching (like .* in PCRE)
     
 Do not escape characters, they are escaped by the plugin
 
