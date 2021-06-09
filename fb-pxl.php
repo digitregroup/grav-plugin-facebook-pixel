@@ -89,6 +89,9 @@ class FbPxlPlugin extends Plugin
     private function sendFbEvent(string $pageUrl, string $type = 'page'): void
     {
         $config = $this->config->get('plugins.' . $this->name);
+        if (! ($config)) {
+            return;
+        }
         $fbUrl = 'https://graph.facebook.com/v10.0/' . $config['pixelid'] . '/events?access_token=' . $config['accesstoken'];
         $_fbc = $_COOKIE['_fbc'];
         $_fbp = $_COOKIE['_fbp'];
