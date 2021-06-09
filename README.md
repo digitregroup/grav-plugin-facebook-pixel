@@ -25,7 +25,7 @@ You can specify plain urls or simple regular expressions to be matched :
     
 Do not escape characters, they are escaped by the plugin
 
-The last rule matching the page URL will apply and trigger the corresponding event.
+The **last rule** matching the page URL will apply and trigger the corresponding event.
 
 If you need to trigger the event web a form is sent, append |form at the end of the rule.
 
