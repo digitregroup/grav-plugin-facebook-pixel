@@ -93,8 +93,8 @@ class FbPxlPlugin extends Plugin
             return;
         }
         $fbUrl = 'https://graph.facebook.com/v10.0/' . $config['pixelid'] . '/events?access_token=' . $config['accesstoken'];
-        $_fbc = $_COOKIE['_fbc'];
-        $_fbp = $_COOKIE['_fbp'];
+        $_fbc = $_COOKIE['_fbc'] ?? '';
+        $_fbp = $_COOKIE['_fbp'] ?? '';
 
         $eventName = $this->getEventName($config['rules'], $pageUrl, $type);
 
@@ -120,7 +120,7 @@ class FbPxlPlugin extends Plugin
         );
 
         if ($config['testmode']) {
-            $payload['test_event_code'] = $config['testevent'];
+            $payload['test_event_code'] = $config['testevent'] ?? 'TEST';
         }
 
         $ch = curl_init($fbUrl);
