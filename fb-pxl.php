@@ -86,7 +86,7 @@ class FbPxlPlugin extends Plugin
      * @param string $type
      * @return void
      */
-    private function sendFbEvent(string $pageUrl, string $type = 'page'): void
+    private function sendFbEvent(string $pageUrl, string $type = 'page', array $userData = array()): void
     {
         $config = $this->config->get('plugins.' . $this->name);
         if (! isset($config['pixelid'])) {
@@ -113,6 +113,10 @@ class FbPxlPlugin extends Plugin
                 'referer' => $_SERVER['HTTP_REFERER']
             )
         );
+
+        if ($type == 'form' && count($userData) > 0) {
+            $data['user_data'] = array_merge($data['user_data'], $userData);
+        }
 
         $payload = array(
             'data' => json_encode(array($data)),
@@ -154,7 +158,16 @@ class FbPxlPlugin extends Plugin
         if ($this->isAdmin()) {
             return;
         }
+        $email = $e['form']->value('email') ?? '';
+        $emailHash = hash('sha256', $email);
+        $phone = $e['form']->value('phone') ?? '';
+        $phoneHash = hash('sha256', $phone);
 
-        $this->sendFbEvent($e['action'], 'form');
+        $userData = array(
+            'em' => $emailHash,
+            'ph' => $phoneHash
+        );
+
+        $this->sendFbEvent($e['action'], 'form', $userData);
     }
 }
