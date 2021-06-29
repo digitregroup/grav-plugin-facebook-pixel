@@ -98,6 +98,11 @@ class FbPxlPlugin extends Plugin
 
         $eventName = $this->getEventName($config['rules'], $pageUrl, $type);
 
+        $referer = '';
+        if (isset($_SERVER['HTTP_REFERER'])) {
+            $referer = $_SERVER['HTTP_REFERER'];
+        }
+
         $data = array(
             'event_name' => $eventName,
             'event_time' => time(),
@@ -110,7 +115,7 @@ class FbPxlPlugin extends Plugin
                 'fbp' => $_fbp
             ),
             'custom_data' => array(
-                'referer' => $_SERVER['HTTP_REFERER']
+                'referer' => $referer
             )
         );
 
