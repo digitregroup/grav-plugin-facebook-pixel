@@ -96,6 +96,8 @@ class FbPxlPlugin extends Plugin
         $_fbc = $_COOKIE['_fbc'] ?? '';
         $_fbp = $_COOKIE['_fbp'] ?? '';
 
+        $rules = array_key_exists('rules', $config) ? $config['rules'] : Array();
+
         $eventName = $this->getEventName($config['rules'], $pageUrl, $type);
 
         $referer = '';
