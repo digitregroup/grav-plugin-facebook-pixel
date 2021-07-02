@@ -82,6 +82,21 @@ class FbPxlPlugin extends Plugin
     }
 
     /**
+     * Determine if we must upgrade FB API version
+     * @param string $response
+     * @return bool
+     */
+    private function autoAdjustApiVersion(string $response): bool
+    {
+        if(preg_match('/Please update to the latest version: (v\d\d\.\d)/', $response, $matches) === 1) {
+            $newVersion = $matches[1];
+            $this->config->get('plugins.' . $this->name . '.fbApiVersion', $newVersion);
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * @param string $pageUrl
      * @param string $type
      * @return void
@@ -92,13 +107,13 @@ class FbPxlPlugin extends Plugin
         if (! isset($config['pixelid'])) {
             return;
         }
-        $fbUrl = 'https://graph.facebook.com/v10.0/' . $config['pixelid'] . '/events?access_token=' . $config['accesstoken'];
+        $fbUrl = 'https://graph.facebook.com/(' . $config['fbApiVersion'] . ')/' . $config['pixelid'] . '/events?access_token=' . $config['accesstoken'];
         $_fbc = $_COOKIE['_fbc'] ?? '';
         $_fbp = $_COOKIE['_fbp'] ?? '';
 
         $rules = array_key_exists('rules', $config) ? $config['rules'] : Array();
 
-        $eventName = $this->getEventName($config['rules'], $pageUrl, $type);
+        $eventName = $this->getEventName($rules, $pageUrl, $type);
 
         $referer = '';
         if (isset($_SERVER['HTTP_REFERER'])) {
@@ -140,9 +155,17 @@ class FbPxlPlugin extends Plugin
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_VERBOSE, true);
         $result = curl_exec($ch);
-        $this->grav['log']->info(var_export($result, true));
-        $this->grav['debugger']->addMessage($result);
         curl_close($ch);
+
+        $this->grav['log']->info('[FB Pxl Plugin] '.var_export($result, true));
+        $this->grav['debugger']->addMessage($result);
+
+        // test if the FB API version need auto adjust
+        if ($this->autoAdjustApiVersion(var_export($result, true))) {
+            $this->grav['log']->info('[FB Pxl Plugin] Facebook API version upgraded to '.$config['fbApiVersion']);
+            // retry to send the event to FB
+            $this->sendFbEvent($pageUrl, $type, $userData);
+        }
     }
 
     /**

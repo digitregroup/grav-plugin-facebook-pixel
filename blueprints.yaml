@@ -43,6 +43,15 @@ form:
               type: text
               label: Access Token
               placeholder: EAAx1XwT1yCEBALDGADoyZCIXoJQU72Rl3Kssmj25SwV3pOTha8hFQLl0ddiFjzBUMP4LJrhcy5q8sMYHPIP4KyXBFnqTleNPkfZCcO2OPd9ohPfIOv1rfddU9ZCrR5D4lxjsYHzT0RPm7wDFhJZATUzsTEE4N1fFNeQ5uFHhD7AMrBWyQW2ZCHTtM4bhpn7YZD
+            FacebookAPI:
+              type: section
+              title: Facebook API
+              underline: true
+            fbApiVersion:
+              type: text
+              label: Version
+              placeholder: v11.0
+              default: v11.0
         test:
           type: tab
           title: Test mode
