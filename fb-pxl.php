@@ -142,7 +142,8 @@ class FbPxlPlugin extends Plugin
         $result = curl_exec($ch);
         curl_close($ch);
 
-        $this->grav['log']->info('[FB Pxl Plugin] '.var_export($result, true));
+        $this->grav['log']->info('[FB Pxl Plugin (sent)] '.var_export($payload, true));
+        $this->grav['log']->info('[FB Pxl Plugin (response)] '.var_export($result, true));
         $this->grav['debugger']->addMessage($result);
     }
 
