@@ -112,7 +112,6 @@ class FbPxlPlugin extends Plugin
             'action_source' => 'website',
             'user_data' => array(
                 'client_ip_address' => $_SERVER['REMOTE_ADDR'],
-                'client_user_agent' => $_SERVER['HTTP_USER_AGENT'],
                 'fbc' => $_fbc,
                 'fbp' => $_fbp
             ),
@@ -120,6 +119,10 @@ class FbPxlPlugin extends Plugin
                 'referer' => $referer
             )
         );
+
+        if(isset($_SERVER['HTTP_USER_AGENT'])) {
+            $data['user_data'] = array_merge($data['user_data'], ['client_user_agent' => $_SERVER['HTTP_USER_AGENT']]);
+        }
 
         if ($type == 'form' && count($userData) > 0) {
             $data['user_data'] = array_merge($data['user_data'], $userData);
