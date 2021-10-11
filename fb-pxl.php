@@ -137,21 +137,17 @@ class FbPxlPlugin extends Plugin
             $payload['test_event_code'] = $config['testevent'] ?? 'TEST';
         }
 
-        try {
-            $ch = curl_init($fbUrl);
-            curl_setopt($ch, CURLOPT_POST, 1);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            curl_setopt($ch, CURLOPT_VERBOSE, true);
-            $result = curl_exec($ch);
-            curl_close($ch);
+        $ch = curl_init($fbUrl);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_VERBOSE, true);
+        $result = curl_exec($ch);
+        curl_close($ch);
 
-            //$this->grav['log']->info('[FB Pxl Plugin (sent)] '.var_export($payload, true));
-            //$this->grav['log']->info('[FB Pxl Plugin (response)] '.var_export($result, true));
-            $this->grav['debugger']->addMessage($result);
-        }catch (\Exception $e) {
-            $this->grav['log']->error(print_r($e, true));
-        }
+        //$this->grav['log']->info('[FB Pxl Plugin (sent)] '.var_export($payload, true));
+        //$this->grav['log']->info('[FB Pxl Plugin (response)] '.var_export($result, true));
+        $this->grav['debugger']->addMessage($result);
     }
 
     /**
